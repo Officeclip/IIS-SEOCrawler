@@ -11,26 +11,18 @@ namespace SEOCrawler
         public CrawlerReport AnalyseSite()
         {
             var startUrl = new Uri(GetSiteToCrawl());
+            var crawlerSettings = BuildCrawlerSettings(startUrl);
 
-            var seoReportPath = BuildReportPath();
-            var reportName = BuildReportName(startUrl);
-            var crawlerSettings = BuildCrawlerSettings(startUrl, reportName, seoReportPath);
-
-            // Create a new crawler and start running 
             var crawler = new WebCrawler(crawlerSettings);
             try
             {
                 crawler.Start();
-
-                Console.WriteLine("Processed - Remaining - Download Size");
                 while (crawler.IsRunning)
                 {
                     Thread.Sleep(500);
                 }
 
-                crawler.Report.Save(seoReportPath);
-
-                Console.WriteLine("Crawling complete!!!");
+                crawler.Report.Save(BuildReportPath());
             }
             catch (Exception ex)
             {
@@ -41,8 +33,11 @@ namespace SEOCrawler
             return crawler.Report;
         }
 
-        private static CrawlerSettings BuildCrawlerSettings(Uri startUrl, string reportName, string seoReportPath)
+        private static CrawlerSettings BuildCrawlerSettings(Uri startUrl)
         {
+            var seoReportPath = BuildReportPath();
+            var reportName = BuildReportName(startUrl);
+
             return new CrawlerSettings(startUrl)
                        {
                            ExternalLinkCriteria = ExternalLinkCriteria.SameFolderAndDeeper,
@@ -72,7 +67,7 @@ namespace SEOCrawler
 
             if (string.IsNullOrWhiteSpace(siteToScan))
                 throw new NullReferenceException("Please specify a site URL.");
-            
+
             return siteToScan;
         }
     }
