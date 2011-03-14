@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEOCrawler", "SEOCrawler\SEOCrawler.csproj", "{7270D541-8FD5-44C2-84EE-5DE6890354EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7270D541-8FD5-44C2-84EE-5DE6890354EC}.Debug|x86.ActiveCfg = Debug|x86
+		{7270D541-8FD5-44C2-84EE-5DE6890354EC}.Debug|x86.Build.0 = Debug|x86
+		{7270D541-8FD5-44C2-84EE-5DE6890354EC}.Release|x86.ActiveCfg = Release|x86
+		{7270D541-8FD5-44C2-84EE-5DE6890354EC}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
