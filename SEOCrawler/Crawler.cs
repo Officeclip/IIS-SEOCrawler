@@ -32,24 +32,31 @@ namespace SEOCrawler
 
             // Create a new crawler and start running 
             var crawler = new WebCrawler(settings);
-            crawler.Start();
-
-            Console.WriteLine("Processed - Remaining - Download Size");
-            while (crawler.IsRunning)
+            try
             {
-                Thread.Sleep(1000);
-                Console.WriteLine("{0,9:N0} - {1,9:N0} - {2,9:N2} MB",
-                    crawler.Report.GetUrlCount(),
-                    crawler.RemainingUrls,
-                    crawler.BytesDownloaded / 1048576.0f);
+                crawler.Start();
+
+                Console.WriteLine("Processed - Remaining - Download Size");
+                while (crawler.IsRunning)
+                {
+                    Thread.Sleep(1000);
+                    Console.WriteLine("{0,9:N0} - {1,9:N0} - {2,9:N2} MB",
+                        crawler.Report.GetUrlCount(),
+                        crawler.RemainingUrls,
+                        crawler.BytesDownloaded / 1048576.0f);
+                }
+
+                // Save the report 
+                crawler.Report.Save(path);
+
+                Console.WriteLine("Crawling complete!!!");
+                return crawler.Report;
             }
-
-            // Save the report 
-            crawler.Report.Save(path);
-
-            Console.WriteLine("Crawling complete!!!");
-
-            return crawler.Report;
+            catch (Exception ex)
+            {
+                //logging needs added here
+                throw new ApplicationException(string.Format("Error Crawling {0}", siteToScan));
+            }
         }
 
         private static string GetSiteToCrawl()
