@@ -7,7 +7,7 @@ namespace SEOCrawler
 {
     public class CrawlerQueryManager
     {
-        private CrawlerReport _report;
+        private readonly CrawlerReport _report;
 
         public CrawlerQueryManager(CrawlerReport report)
         {
