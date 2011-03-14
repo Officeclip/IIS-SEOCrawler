@@ -15,20 +15,20 @@ namespace SEOCrawler
             // Create a URI class 
             var startUrl = new Uri(siteToScan);
 
+            // Use the same directory as the default used by the UI 
+            var seoReportPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "IIS SEO Reports");
+
+            var reportName = startUrl.Host + " " + DateTime.Now.ToString("yy-MM-dd hh-mm-ss");
+
             // Generate a unique name 
             var settings = new CrawlerSettings(startUrl)
             {
                 ExternalLinkCriteria = ExternalLinkCriteria.SameFolderAndDeeper,
-                Name = startUrl.Host + " " + DateTime.Now.ToString("yy-MM-dd hh-mm-ss")
+                Name = reportName,
+                DirectoryCache = Path.Combine(seoReportPath, reportName)
             };
-            
-
-            // Use the same directory as the default used by the UI 
-            string path = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                "IIS SEO Reports");
-
-            settings.DirectoryCache = Path.Combine(path, settings.Name);
 
             // Create a new crawler and start running 
             var crawler = new WebCrawler(settings);
@@ -47,7 +47,7 @@ namespace SEOCrawler
                 }
 
                 // Save the report 
-                crawler.Report.Save(path);
+                crawler.Report.Save(seoReportPath);
 
                 Console.WriteLine("Crawling complete!!!");
                 return crawler.Report;
