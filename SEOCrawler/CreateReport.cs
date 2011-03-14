@@ -72,12 +72,19 @@ namespace SEOCrawler
 
         public void CreateXmlLogSummary(CrawlerReport report)
         {
-            var summary = LogSummary(report);
-            var statusCodeSummary = LogStatusCodeSummary(report);
-            var brokenLinksSummary = LogBrokenLinks(report);
+            var html = CreateHtmlString(report);
 
+            var streamWriter = new StreamWriter(Path.Combine(ConfigurationManager.AppSettings["LogPath"], "SEOReport.html"));
+            streamWriter.Write(html);
+            streamWriter.Flush();
+            streamWriter.Close();
+        }
+
+        private string CreateHtmlString(CrawlerReport report)
+        {
             var html = new StringBuilder();
             html.Append("<html>");
+
             html.Append("<head>");
             html.Append("<title>");
             html.Append(string.Format("SEO Report for {0}", ConfigurationManager.AppSettings["siteName"]));
@@ -88,20 +95,17 @@ namespace SEOCrawler
             html.Append(string.Format("<p>Report of {0} created on {1}</p>", ConfigurationManager.AppSettings["siteName"], DateTime.Today.ToShortDateString()));
 
             html.Append("<h2>Summary</h2>");
-            html.Append(summary);
+            html.Append(LogSummary(report));
             html.Append("<br />");
             html.Append("<h2>Status Codes</h2>");
-            html.Append(statusCodeSummary);
+            html.Append(LogStatusCodeSummary(report));
             html.Append("<br />");
             html.Append("<h2>Broken Links</h2>");
-            html.Append(brokenLinksSummary);
+            html.Append(LogBrokenLinks(report));
             html.Append("</body>");
             html.Append("</html>");
 
-            var streamWriter = new StreamWriter(Path.Combine(ConfigurationManager.AppSettings["LogPath"], "SEOReport.html"));
-            streamWriter.Write(html.ToString());
-            streamWriter.Flush();
-            streamWriter.Close();
+            return html.ToString();
         }
     }
 }
