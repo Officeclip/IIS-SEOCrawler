@@ -25,24 +25,20 @@ namespace SEOCrawler
                 Console.WriteLine("Processed - Remaining - Download Size");
                 while (crawler.IsRunning)
                 {
-                    Thread.Sleep(1000);
-                    Console.WriteLine("{0,9:N0} - {1,9:N0} - {2,9:N2} MB",
-                        crawler.Report.GetUrlCount(),
-                        crawler.RemainingUrls,
-                        crawler.BytesDownloaded / 1048576.0f);
+                    Thread.Sleep(500);
                 }
 
-                // Save the report 
                 crawler.Report.Save(seoReportPath);
 
                 Console.WriteLine("Crawling complete!!!");
-                return crawler.Report;
             }
             catch (Exception ex)
             {
                 //logging needs added here
                 throw new ApplicationException(string.Format("Error Crawling {0}", startUrl));
             }
+
+            return crawler.Report;
         }
 
         private static CrawlerSettings BuildCrawlerSettings(Uri startUrl, string reportName, string seoReportPath)

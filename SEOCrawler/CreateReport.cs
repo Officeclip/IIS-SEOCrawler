@@ -10,8 +10,10 @@ using Microsoft.Web.Management.SEO.Crawler;
 
 namespace SEOCrawler
 {
-    public class LogReport
+    public class CreateReport
     {
+        private ReportQueries _queryBuilder = new ReportQueries();
+
         public string LogSummary(CrawlerReport report)
         {
             var logSummary = new StringBuilder();
@@ -37,7 +39,7 @@ namespace SEOCrawler
             Console.WriteLine("Broken Links");
             Console.WriteLine("----------------------------");
 
-            var urls = GetBrokenLinks(report);
+            var urls = _queryBuilder.GetBrokenLinks(report);
             foreach (var item in urls)
             {
                 LogToConsoleAndStringBuilder(brokenLinksSummary, item.Url.AbsoluteUri);
@@ -54,30 +56,13 @@ namespace SEOCrawler
             Console.WriteLine("Status Code Summary");
             Console.WriteLine("----------------------------");
 
-            var statusCodeUrls = GetUrlsByStatusCode(report);
+            var statusCodeUrls = _queryBuilder.GetUrlsByStatusCode(report);
             foreach (var item in statusCodeUrls)
             {
                 LogToConsoleAndStringBuilder(statusCodeSummary, string.Format("{0,20} - {1,5:N0}", item.Key, item.Count()));
             }
 
             return statusCodeSummary.ToString();
-        }
-
-        private static IEnumerable<IGrouping<HttpStatusCode, UrlInfo>> GetUrlsByStatusCode(CrawlerReport report)
-        {
-            return from url in report.GetUrls()
-                   group url by url.StatusCode
-                       into g
-                       orderby g.Key
-                       select g;
-        }
-
-        private static IEnumerable<UrlInfo> GetBrokenLinks(CrawlerReport report)
-        {
-            return from url in report.GetUrls()
-                   where url.StatusCode == HttpStatusCode.NotFound && !url.IsExternal
-                   orderby url.Url.AbsoluteUri ascending
-                   select url;
         }
 
         private static void LogToConsoleAndStringBuilder(StringBuilder summary, string message)

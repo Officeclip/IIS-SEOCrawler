@@ -14,7 +14,7 @@ namespace SEOCrawler
                 throw new ApplicationException("Error Creating Crawler Report");
 
             // Log the analysis summary
-            var logCrawlerReport = new LogReport();
+            var logCrawlerReport = new CreateReport();
             logCrawlerReport.CreateXmlLogSummary(report);
         }
     }
