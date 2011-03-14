@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
-using System.Xml.Linq;
 using Microsoft.Web.Management.SEO.Crawler;
 
 namespace SEOCrawler
 {
     public class CreateReport
     {
-        private ReportQueries _queryBuilder = new ReportQueries();
+        private CrawlerQueryManager _queryBuilder;
 
         public string LogSummary(CrawlerReport report)
         {
@@ -39,7 +36,8 @@ namespace SEOCrawler
             Console.WriteLine("Broken Links");
             Console.WriteLine("----------------------------");
 
-            var urls = _queryBuilder.GetBrokenLinks(report);
+            _queryBuilder = new CrawlerQueryManager(report);
+            var urls = _queryBuilder.GetBrokenLinks();
             foreach (var item in urls)
             {
                 LogToConsoleAndStringBuilder(brokenLinksSummary, item.Url.AbsoluteUri);
@@ -56,7 +54,8 @@ namespace SEOCrawler
             Console.WriteLine("Status Code Summary");
             Console.WriteLine("----------------------------");
 
-            var statusCodeUrls = _queryBuilder.GetUrlsByStatusCode(report);
+            _queryBuilder = new CrawlerQueryManager(report);
+            var statusCodeUrls = _queryBuilder.GetUrlsByStatusCode();
             foreach (var item in statusCodeUrls)
             {
                 LogToConsoleAndStringBuilder(statusCodeSummary, string.Format("{0,20} - {1,5:N0}", item.Key, item.Count()));

@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateREport.cs" />
+    <Compile Include="CreateReport.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Crawler.cs" />
-    <Compile Include="ReportQueries.cs" />
+    <Compile Include="CrawlerQueryManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
