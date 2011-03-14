@@ -6,9 +6,9 @@ using Microsoft.Web.Management.SEO.Crawler;
 
 namespace SEOCrawler
 {
-    public class Crawler
+    public class RunCrawler
     {
-        public CrawlerReport RunAnalysis()
+        public CrawlerReport AnalyseSite()
         {
             var startUrl = new Uri(GetSiteToCrawl());
 

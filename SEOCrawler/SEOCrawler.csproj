@@ -46,10 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateReport.cs" />
+    <Compile Include="CreateReportOutput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Crawler.cs" />
+    <Compile Include="RunCrawler.cs" />
     <Compile Include="CrawlerQueryManager.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ using Microsoft.Web.Management.SEO.Crawler;
 
 namespace SEOCrawler
 {
-    public class CreateReport
+    public class CreateReportOutput
     {
         private CrawlerQueryManager _queryBuilder;
 
