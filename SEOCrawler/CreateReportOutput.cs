@@ -74,7 +74,7 @@ namespace SEOCrawler
         {
             var html = CreateHtmlString(report);
 
-            var streamWriter = new StreamWriter(Path.Combine(ConfigurationManager.AppSettings["LogPath"], "SEOReport.html"));
+            var streamWriter = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "SEOReport.html"));
             streamWriter.Write(html);
             streamWriter.Flush();
             streamWriter.Close();
