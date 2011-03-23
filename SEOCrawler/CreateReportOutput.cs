@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -70,9 +69,9 @@ namespace SEOCrawler
             summary.AppendLine("<p>" + message + "</p>");
         }
 
-        public void CreateXmlLogSummary(CrawlerReport report)
+        public void CreateXmlLogSummary(dynamic site, CrawlerReport report)
         {
-            var html = CreateHtmlString(report);
+            var html = CreateHtmlString(site, report);
 
             var streamWriter = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "SEOReport.html"));
             streamWriter.Write(html);
@@ -80,19 +79,19 @@ namespace SEOCrawler
             streamWriter.Close();
         }
 
-        private string CreateHtmlString(CrawlerReport report)
+        private string CreateHtmlString(dynamic site, CrawlerReport report)
         {
             var html = new StringBuilder();
             html.Append("<html>");
 
             html.Append("<head>");
             html.Append("<title>");
-            html.Append(string.Format("SEO Report for {0}", ConfigurationManager.AppSettings["siteName"]));
+            html.Append(string.Format("SEO Report for {0}", site.Url));
             html.Append("</title>");
             html.Append("</head>");
 
             html.Append("<body>");
-            html.Append(string.Format("<p>Report of {0} created on {1}</p>", ConfigurationManager.AppSettings["siteName"], DateTime.Today.ToShortDateString()));
+            html.Append(string.Format("<p>Report of {0} created on {1}</p>", site.Url, DateTime.Today.ToShortDateString()));
 
             html.Append("<h2>Summary</h2>");
             html.Append(LogSummary(report));

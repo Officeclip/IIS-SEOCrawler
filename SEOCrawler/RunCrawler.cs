@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using System.Threading;
 using Microsoft.Web.Management.SEO.Crawler;
@@ -8,9 +7,9 @@ namespace SEOCrawler
 {
     public class RunCrawler
     {
-        public CrawlerReport AnalyseSite()
+        public CrawlerReport AnalyseSite(dynamic site)
         {
-            var startUrl = new Uri(GetSiteToCrawl());
+            var startUrl = new Uri(site.Url);
             var crawlerSettings = BuildCrawlerSettings(startUrl);
 
             var crawler = new WebCrawler(crawlerSettings);
@@ -59,16 +58,6 @@ namespace SEOCrawler
             return Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 "IIS SEO Reports");
-        }
-
-        private static string GetSiteToCrawl()
-        {
-            var siteToScan = ConfigurationManager.AppSettings.Get("siteName");
-
-            if (string.IsNullOrWhiteSpace(siteToScan))
-                throw new NullReferenceException("Please specify a site URL.");
-
-            return siteToScan;
         }
     }
 }
