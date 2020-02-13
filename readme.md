@@ -17,7 +17,10 @@ value back to the old value
 Chances are that your website has moved on from TLS 1.0, where microsoft toolkit uses tls 1.0. If this happens you will
 get a violation error and it will exit. For workaround do the following...
 
+1. In the IIS SEO Toolkit, on the right click on Edit Feature settings and set the directory to
+C:\Users\{your user name}\Documents\IIS SEO Reports (means create a folder IIS SEO Reports under your documents directory)
+
 1. Download and run this program with the site name as argument (e.g. seocrawler "https://www.officeclip.com") 
 and wait for the program to finish.
 
-2. 
+2. Now refresh IIS and you will be able to view your report
