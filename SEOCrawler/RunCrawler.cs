@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Threading;
 using Microsoft.Web.Management.SEO.Crawler;
 
@@ -9,6 +10,7 @@ namespace SEOCrawler
     {
         public CrawlerReport AnalyseSite(dynamic site)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var startUrl = new Uri(site.Url);
             var crawlerSettings = BuildCrawlerSettings(startUrl);
 
